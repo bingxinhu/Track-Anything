@@ -103,7 +103,7 @@ class BaseTracker:
 
         # print(f'max memory allocated: {torch.cuda.max_memory_allocated()/(2**20)} MB')
 
-        return final_mask, final_mask, painted_image
+        return final_mask, probs, painted_image
 
     @torch.no_grad()
     def sam_refinement(self, frame, logits, ti):
