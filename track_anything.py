@@ -65,7 +65,7 @@ def parse_augment():
     parser.add_argument('--sam_model_type', type=str, default="vit_h")
     parser.add_argument('--port', type=int, default=6080, help="only useful when running gradio applications")  
     parser.add_argument('--debug', action="store_true")
-    parser.add_argument('--mask_save', default=False)
+    parser.add_argument('--mask_save', default=True)
     args = parser.parse_args()
 
     if args.debug:
@@ -89,6 +89,7 @@ if __name__ == "__main__":
     mask[0,0]= 1
     trackany = TrackingAnything('./checkpoints/sam_vit_h_4b8939.pth','./checkpoints/XMem-s012.pth', './checkpoints/E2FGVI-HQ-CVPR22.pth', args)
     masks, logits ,painted_images= trackany.generator(images, mask)
+
         
         
     
