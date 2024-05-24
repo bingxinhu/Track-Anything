@@ -599,4 +599,4 @@ with gr.Blocks() as iface:
         # cache_examples=True,
     ) 
 
-iface.launch(debug=True, server_port=args.port, server_name="0.0.0.0",max_threads=1,share=True)
+iface.launch(debug=True, server_port=args.port, server_name="127.0.0.1",max_threads=1,share=True)
