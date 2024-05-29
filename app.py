@@ -114,6 +114,7 @@ def get_frames_from_video(video_input, video_state):
     video_info = "Video Name: {}, FPS: {}, Total Frames: {}, Image Size:{}".format(video_state["video_name"], video_state["fps"], len(frames), image_size)
     model.samcontroler.sam_controler.reset_image() 
     model.samcontroler.sam_controler.set_image(video_state["origin_images"][0])
+    print(video_info)
     return video_state, video_info, video_state["origin_images"][0], gr.update(visible=True, maximum=len(frames), value=1), gr.update(visible=True, maximum=len(frames), value=len(frames)), \
                         gr.update(visible=True),\
                         gr.update(visible=True), gr.update(visible=True), \
@@ -336,18 +337,24 @@ def generate_video_from_frames(frames, output_path, fps=30):
         output_path (str): The path to save the generated video.
         fps (int, optional): The frame rate of the output video. Defaults to 30.
     """
-    # height, width, layers = frames[0].shape
-    # fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    # video = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
-    # print(output_path)
-    # for frame in frames:
-    #     video.write(frame)
-    
+    height, width, layers = frames[0].shape
+    print(f"Video width: {width}, height: {height}")
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    video = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+    print(output_path)
+    for frame in frames:
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        video.write(frame)
+    # zhaifang add
+    '''
+    height, width, layers = frames[0].shape
+    print(f"Video width: {width}, height: {height}")
     # video.release()
     frames = torch.from_numpy(np.asarray(frames))
     if not os.path.exists(os.path.dirname(output_path)):
         os.makedirs(os.path.dirname(output_path))
     torchvision.io.write_video(output_path, frames, fps=fps, video_codec="libx264")
+    '''
     return output_path
 
 
